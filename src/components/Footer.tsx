@@ -1,5 +1,6 @@
-import { Box, HStack, Text, VStack, Link, Image, Icon } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack, Image, Icon } from "@chakra-ui/react";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -94,44 +95,46 @@ export default function Footer() {
           justifyContent="center"
           textAlign="center"
         >
-          <Link
-            href="/"
-            fontSize={{ base: "sm", md: "md" }}
-            fontWeight="bold"
-            color="white"
-            _hover={{ textDecoration: "underline", color: "secondary.500" }}
-            mb={{ base: 2, md: 0 }}
-          >
-            الرئيسية
+          <Link to="/">
+            <Text
+              fontSize={{ base: "sm", md: "md" }}
+              fontWeight="bold"
+              color="white"
+              _hover={{ textDecoration: "underline", color: "secondary.500" }}
+              mb={{ base: 2, md: 0 }}
+            >
+              الرئيسية
+            </Text>
           </Link>
-          <Link
-            href="/salam"
-            fontSize={{ base: "sm", md: "md" }}
-            fontWeight="bold"
-            color="white"
-            _hover={{ textDecoration: "underline", color: "secondary.500" }}
-            mb={{ base: 2, md: 0 }}
-          >
-            حكايا سلام
+          <Link to="/salam">
+            <Text
+              fontSize={{ base: "sm", md: "md" }}
+              fontWeight="bold"
+              color="white"
+              _hover={{ textDecoration: "underline", color: "secondary.500" }}
+              mb={{ base: 2, md: 0 }}
+            >
+              حكايا سلام
+            </Text>
           </Link>
 
-          <Link
-            href="https://www.instagram.com"
-            isExternal
-            color="white"
-            _hover={{ color: "secondary.500" }}
-            mb={{ base: 2, md: 0 }}
-          >
-            <Icon as={FaInstagram} boxSize={{ base: 5, md: 6 }} />
+          <Link to="https://www.instagram.com">
+            <Icon
+              color="white"
+              _hover={{ color: "secondary.500" }}
+              mb={{ base: 2, md: 0 }}
+              as={FaInstagram}
+              boxSize={{ base: 5, md: 6 }}
+            />
           </Link>
-          <Link
-            href="https://www.facebook.com"
-            isExternal
-            color="white"
-            _hover={{ color: "secondary.500" }}
-            mb={{ base: 2, md: 0 }}
-          >
-            <Icon as={FaFacebook} boxSize={{ base: 5, md: 6 }} />
+          <Link to="https://www.facebook.com">
+            <Icon
+              color="white"
+              _hover={{ color: "secondary.500" }}
+              mb={{ base: 2, md: 0 }}
+              as={FaFacebook}
+              boxSize={{ base: 5, md: 6 }}
+            />
           </Link>
         </HStack>
         <Text
