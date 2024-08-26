@@ -47,7 +47,7 @@ const theme = extendTheme({
     mono: `'Noto Sans Arabic', monospace`,
   },
   styles: {
-    global: (props: StyleFunctionProps) => ({
+    global: () => ({
       body: {
         bg: 'white',
         color: 'primary.500',

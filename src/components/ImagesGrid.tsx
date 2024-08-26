@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Image, Box } from "@chakra-ui/react";
-import decoration1 from "../assets/decoration-1.png";
+
 interface ImagesGridProps {
   images: string[];
 }
