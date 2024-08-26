@@ -1,6 +1,6 @@
 
 import { extendTheme, ThemeConfig } from '@chakra-ui/react';
-import { StyleFunctionProps } from '@chakra-ui/styled-system';
+
 
 
 const colors = {
