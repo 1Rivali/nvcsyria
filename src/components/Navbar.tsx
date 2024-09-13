@@ -29,7 +29,7 @@ export default function Navbar() {
         mb={isMobile ? "2" : "0"}
       />
       {
-        <Box position={"relative"} textAlign={isMobile ? "center" : "center"}>
+        <Box textAlign={isMobile ? "center" : "center"}>
           <Text fontWeight={"bold"} fontSize={isMobile ? "md" : "2xl"}>
             تعاطف للتنمية والتواصل اللاعنفي
           </Text>

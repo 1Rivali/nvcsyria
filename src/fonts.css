@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'makina';
+    src: url('/fonts/29LTMakina.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'urd';
+    src: url('/fonts/UrdType.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+  
