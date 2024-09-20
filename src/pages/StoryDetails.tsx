@@ -69,6 +69,7 @@ export default function StoryDetails() {
                   <Box width={"full"} pt={2} key={index}>
                     <Text
                       fontSize={{ base: "18px", md: "20px" }}
+                      fontFamily={"makina"}
                       textAlign={"start"}
                       mr={"17%"}
                       key={index}

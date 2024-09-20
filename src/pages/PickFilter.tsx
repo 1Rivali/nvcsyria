@@ -89,7 +89,7 @@ const PickFilter: React.FC = () => {
               >
                 <Text
                   color={"primary.500"}
-                  fontSize={"23px"}
+                  fontSize={"20px"}
                   textAlign={"center"}
                   fontWeight={"bold"}
                 >
@@ -112,8 +112,8 @@ const PickFilter: React.FC = () => {
             {tags.map((tag, index) => (
               <Box
                 key={tag.id}
-                width={"6vw"}
-                height={"12vh"}
+                width={"9vw"}
+                height={"18vh"}
                 textAlign={"center"}
                 backgroundImage={noteImage}
                 backgroundSize={"contain"}

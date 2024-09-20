@@ -17,8 +17,8 @@ export const NoteCard: React.FC<NoteCardProps> = ({
       left={"5%"}
       bottom={0}
       top={0}
-      height={"80%"}
-      width={"40%"}
+      height={"90%"}
+      width={"100%"}
       transform={transform}
       {...props}
     >

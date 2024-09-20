@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Divider,
   Heading,
   HStack,
@@ -56,10 +57,10 @@ export default function AdminHome() {
   const [editingStory, setEditingStory] = useState(null);
   const { tags } = useTags();
   const { states } = useStates();
-
+  const [refetch, setRefetch] = useState(0);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  const { stories, loading } = useStories(filters);
+  const { stories, loading } = useStories(filters, [refetch]);
 
   const handleFilterChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -112,7 +113,7 @@ export default function AdminHome() {
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       onClose();
-      window.location.reload();
+      setRefetch(refetch + 1);
     } catch (error) {
       console.error("Error updating story:", error);
     }
@@ -123,7 +124,7 @@ export default function AdminHome() {
       await axios.delete(`${baseUrl}/${apiVersion}/stories/${storyId}`, {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      window.location.reload();
+      setRefetch(refetch + 1);
     } catch (error) {
       console.error("Error deleting story:", error);
     }
@@ -217,57 +218,67 @@ export default function AdminHome() {
                       cursor: "pointer",
                     }}
                     onClick={() => navigate(`/stories/${story.id}`)}
+                    width="100%"
+                    height="fit-content"
+                    py={20}
+                    key={index}
                   >
-                    <VStack textAlign={"center"} spacing={{ base: 2, md: 4 }}>
-                      <Heading
-                        as={"h6"}
-                        fontSize={{ base: "16px", md: "18px", lg: "20px" }} // Responsive font size
-                        isTruncated
-                        maxW="full" // Ensures the Heading doesn't overflow horizontally
+                    <Center>
+                      <VStack
+                        minW={"50%"}
+                        maxW={"70%"}
+                        textAlign={"center"}
+                        spacing={{ base: 2, md: 4 }}
+                        mt={10}
                       >
-                        {story.attributes.title}
-                      </Heading>
-                      <Text
-                        color={"black"}
-                        fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                        noOfLines={1} // Truncate after 1 line
-                      >
-                        {story.includes.place.attributes.name}
-                      </Text>
-                      <Text
-                        color={"black"}
-                        fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                        noOfLines={1} // Truncate after 1 line
-                      >
-                        {story.includes.category[0].attributes.name}
-                      </Text>
-                      <Text
-                        color={"secondary.800"}
-                        fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                        noOfLines={1} // Truncate after 1 line
-                      >
-                        {story.attributes.teller}
-                      </Text>
-
-                      <HStack fontWeight={"bold"}>
-                        <BsEye size={"24px"} />
+                        <Heading
+                          as={"h6"}
+                          fontSize={{ base: "16px", md: "18px", lg: "20px" }} // Responsive font size
+                          isTruncated
+                          maxW="full" // Ensures the Heading doesn't overflow horizontally
+                        >
+                          {story.attributes.title}
+                        </Heading>
                         <Text
+                          color={"black"}
                           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                          textAlign={"center"}
                           noOfLines={1} // Truncate after 1 line
                         >
-                          {story.attributes.clicks}
+                          {story.includes.place.attributes.name}
                         </Text>
-                      </HStack>
-
-                      <HStack fontWeight={"bold"}>
-                        <MdDateRange size={"24px"} />
-                        <Text>
-                          قبل
-                          {formatDateToAgo(story.attributes.created_at)}
+                        <Text
+                          color={"black"}
+                          fontSize={{ base: "14px", md: "16px", lg: "18px" }}
+                          noOfLines={1} // Truncate after 1 line
+                        >
+                          {story.includes.category[0].attributes.name}
                         </Text>
-                      </HStack>
-                    </VStack>
+                        <Text
+                          color={"secondary.800"}
+                          fontSize={{ base: "14px", md: "16px", lg: "18px" }}
+                          noOfLines={1} // Truncate after 1 line
+                        >
+                          {story.attributes.teller}
+                        </Text>
+                        <HStack fontWeight={"bold"}>
+                          <BsEye size={"24px"} />
+                          <Text
+                            fontSize={{ base: "14px", md: "16px", lg: "18px" }}
+                            textAlign={"center"}
+                            noOfLines={1} // Truncate after 1 line
+                          >
+                            {story.attributes.clicks}
+                          </Text>
+                        </HStack>
+                        <HStack fontWeight={"bold"}>
+                          <MdDateRange size={"24px"} />
+                          <Text>
+                            قبل
+                            {formatDateToAgo(story.attributes.created_at)}
+                          </Text>
+                        </HStack>
+                      </VStack>
+                    </Center>
                   </StickyNote>
 
                   {/* Edit Button (Left) */}
@@ -275,7 +286,7 @@ export default function AdminHome() {
                     position="absolute"
                     left="6"
                     top="0"
-                    transform="translateY(-50%)"
+                    transform="translateY(200%)"
                     size="sm"
                     borderRadius="full"
                     colorScheme="blue"
@@ -289,7 +300,7 @@ export default function AdminHome() {
                     position="absolute"
                     right="0"
                     top="0"
-                    transform="translateY(-50%)"
+                    transform="translateY(200%)"
                     size="sm"
                     borderRadius="full"
                     colorScheme="red"

@@ -117,16 +117,16 @@ const StoryFilters: React.FC<StoryFiltersProps> = ({
           }}
         >
           <option style={{ color: "black" }} value={"clicks"}>
-            المشاهدات[تصاعدي]
+            المشاهدات[الأقدم]
           </option>
           <option style={{ color: "black" }} value={"-clicks"}>
-            المشاهدات[تنازلي]
+            المشاهدات[الأحدث]
           </option>
           <option style={{ color: "black" }} value={"createdAt"}>
-            التاريخ[تصاعدي]
+            التاريخ[الأقدم]
           </option>
           <option style={{ color: "black" }} value={"-createdAt"}>
-            التاريخ[تنازلي]
+            التاريخ[الأحدث]
           </option>
         </Select>
       </FormControl>

@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Divider,
   Heading,
   HStack,
@@ -72,7 +73,7 @@ const StoriesList: React.FC = () => {
               length:
                 stories.length === 0 || stories.length <= 5
                   ? 30
-                  : stories.length * 5,
+                  : stories.length * 10,
             }).map((_, index) => (
               <>
                 <Divider
@@ -128,13 +129,16 @@ const StoriesList: React.FC = () => {
               <SimpleGrid
                 height={"fit-content"}
                 bottom="10px"
-                columns={[1, 2, 3, 4, 4]}
+                columns={[1, 2, 3, 4]}
                 gap={6}
               >
                 {loading && <Spinner size={"xl"} />}
                 {stories.map((story, index) => (
                   <>
                     <StickyNote
+                      width="100%"
+                      height="fit-content"
+                      py={20}
                       key={index}
                       _hover={{
                         transform: "scale(1.2) rotate(5deg)",
@@ -142,44 +146,50 @@ const StoriesList: React.FC = () => {
                       }}
                       onClick={() => navigate(`/stories/${story.id}`)}
                     >
-                      <VStack textAlign={"center"} spacing={{ base: 2, md: 4 }}>
-                        <Heading
-                          as={"h6"}
-                          fontSize={{ base: "18px", md: "20px", lg: "26px" }} // Responsive font size
-                          isTruncated
-                          maxW="full" //
+                      <Center>
+                        <VStack
+                          minW={"50%"}
+                          maxW={"70%"}
+                          textAlign={"center"}
+                          spacing={{ base: 2, md: 4 }}
                         >
-                          {story.attributes.title}
-                        </Heading>
-                        <Text
-                          color={"black"}
-                          fontSize={{ base: "16px", md: "18px", lg: "24px" }}
-                          noOfLines={1}
-                        >
-                          {story.includes.place.attributes.name}
-                        </Text>
-                        <Text
-                          color={"black"}
-                          fontSize={{ base: "16px", md: "18px", lg: "24px" }}
-                          noOfLines={1}
-                        >
-                          {story.includes.category[0].attributes.name}
-                        </Text>
-                        <Text
-                          color={"secondary.800"}
-                          fontSize={{ base: "16px", md: "18px", lg: "24px" }}
-                          noOfLines={1}
-                        >
-                          {story.attributes.teller}
-                        </Text>
-
-                        <HStack fontWeight={"bold"}>
-                          <MdDateRange size={"24px"} />
-                          <Text>
-                            قبل {formatDateToAgo(story.attributes.created_at)}
+                          <Heading
+                            as={"h6"}
+                            fontSize={{ base: "18px", md: "20px", lg: "26px" }} // Responsive font size
+                            isTruncated
+                            maxW="full" //
+                          >
+                            {story.attributes.title}
+                          </Heading>
+                          <Text
+                            color={"black"}
+                            fontSize={{ base: "16px", md: "18px", lg: "24px" }}
+                            noOfLines={1}
+                          >
+                            {story.includes.place.attributes.name}
                           </Text>
-                        </HStack>
-                      </VStack>
+                          <Text
+                            color={"black"}
+                            fontSize={{ base: "16px", md: "18px", lg: "24px" }}
+                            noOfLines={1}
+                          >
+                            {story.includes.category[0].attributes.name}
+                          </Text>
+                          <Text
+                            color={"secondary.800"}
+                            fontSize={{ base: "16px", md: "18px", lg: "24px" }}
+                            noOfLines={1}
+                          >
+                            {story.attributes.teller}
+                          </Text>
+                          <HStack fontWeight={"bold"}>
+                            <MdDateRange size={"24px"} />
+                            <Text>
+                              قبل {formatDateToAgo(story.attributes.created_at)}
+                            </Text>
+                          </HStack>
+                        </VStack>
+                      </Center>
                     </StickyNote>
                   </>
                 ))}

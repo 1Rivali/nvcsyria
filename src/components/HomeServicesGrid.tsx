@@ -57,10 +57,9 @@ const services: Services = {
       text: (
         <Box>
           <Text mb={5}>
-            مشروع "حكايا سلام" {<br />} هدفه تشكيل فريق من صناع التغيير و
-            السلام, ليساهموا في رفع الوعي إلى الإيجابيات في مجتمعنا السوري.{" "}
-            {<br />} والمساعدة في تدوين و نقل قصص التعاطف والسلام و العيش
-            المشترك.
+            {<br />} هدفه تشكيل فريق من صناع التغيير و السلام, ليساهموا في رفع
+            الوعي إلى الإيجابيات في مجتمعنا السوري. {<br />} والمساعدة في تدوين
+            و نقل قصص التعاطف والسلام و العيش المشترك.
           </Text>
           <Link to={"/salam"}>
             <Text decoration={"underline"} color={"secondary.500"}>
@@ -100,7 +99,7 @@ const HomeServiceGrid = () => {
       backgroundColor={"secondary.500"}
       backgroundImage={`url(${paperTextureImage})`}
       backgroundRepeat={"repeat-y"}
-      backgroundSize={"cover"}
+      backgroundSize={"fill"}
       backgroundPosition={"center"}
     >
       {services.data.map((service, index) => (

@@ -6,7 +6,6 @@ import {
   useBreakpointValue,
   Center,
   HStack,
-  SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
 import StickyNote from "../components/StickyNote";
@@ -37,9 +36,9 @@ const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
         width={"full"}
       >
         <StickyNote
-          transform={index % 2 === 0 ? "rotate(10deg)" : "rotate(170deg)"}
-          height={"50%"}
-          width={"25%"}
+          transform={index % 2 === 0 ? "rotate(0deg)" : "rotate(180deg)"}
+          height={"70%"}
+          width={"35%"}
           m={"auto"}
           left={"5%"}
           bottom={0}
@@ -47,10 +46,15 @@ const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
         >
           <AbsoluteCenter>
             <Box textAlign={"center"}>
-              <Heading fontSize={"64px"} as={"h1"} mb={"10%"}>
-                خدماتنا
+              <Heading
+                mt={20}
+                fontSize={index !== 2 ? "46px" : "36px"}
+                as={"h1"}
+                mb={"2%"}
+              >
+                {index !== 2 ? "خدماتنا" : 'مشروع "حكايا سلام"'}
               </Heading>
-              <Text fontSize={index !== 2 ? "30px" : "23px"}>
+              <Text fontSize={index !== 2 ? "25px" : "20px"}>
                 {service.text}
               </Text>
             </Box>
@@ -111,14 +115,21 @@ const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
         </HStack>
         <StickyNote
           position={"absolute"}
-          height={"50%"}
-          width={"80%"}
+          height={"60%"}
+          width={"100%"}
           bottom={0}
           mb={5}
         >
           <AbsoluteCenter>
             <Box textAlign={"center"}>
-              <Heading>خدماتنا</Heading>
+              <Heading
+                mt={20}
+                fontSize={index !== 2 ? "16px" : "20px"}
+                as={"h1"}
+                mb={"2%"}
+              >
+                {index !== 2 ? "خدماتنا" : 'مشروع "حكايا سلام"'}
+              </Heading>
               <Text fontSize={"14px"}>{service.text}</Text>
             </Box>
           </AbsoluteCenter>

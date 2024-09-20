@@ -37,8 +37,8 @@ const theme = extendTheme({
   colors,
   config,
   fonts: {
-    heading: "urd, Marhey, sans-serif",
-    body: "makina, Marhey, sans-serif",
+    heading: "Calibri, Marhey, sans-serif",
+    body: "Calibri, Marhey, sans-serif",
   },
   styles: {
     global: () => ({

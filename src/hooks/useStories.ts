@@ -5,7 +5,7 @@ import { apiVersion, baseUrl } from '../config/constants';
 
 
 
-const useStories = (filters: IStoryFilters) => {
+const useStories = (filters: IStoryFilters, dependencies?: any[]) => {
     const [stories, setStories] = useState<IStory[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<AxiosError | null>(null);
@@ -13,10 +13,10 @@ const useStories = (filters: IStoryFilters) => {
     useEffect(() => {
         const fetchStories = async () => {
             setLoading(true);
-            setError(null); // Reset error state before a new fetch
+            setError(null);
             try {
                 const response = await axios.get<IStoriesResponse>(`${baseUrl}/${apiVersion}/stories`, {
-                    params: filters,  // Send filters as query parameters
+                    params: filters,
                     headers: { "Accept": "application/json" },
                 });
                 setStories(response.data.data);
@@ -28,7 +28,7 @@ const useStories = (filters: IStoryFilters) => {
         };
 
         fetchStories();
-    }, [filters]); // Fetch data whenever filters change
+    }, dependencies ? [filters, ...dependencies] : [filters]);
 
     return { stories, loading, error };
 };
