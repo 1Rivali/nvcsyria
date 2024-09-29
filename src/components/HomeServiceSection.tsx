@@ -22,7 +22,7 @@ interface HomeServiceSectionProps {
 const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
   service,
   index,
-  transformValues,
+
   mobileTransformValues,
 }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });

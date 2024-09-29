@@ -28,18 +28,6 @@ function StickyNote({
       backgroundPosition={"center"}
       {...boxProps}
     >
-      {/* Top Tape */}
-      {/* <Box
-        position="absolute"
-        top="-10px"
-        left="50%"
-        transform="translateX(-50%) rotate(-10deg)"
-        width={tapeWidth} // Tape width as a percentage of the sticky note's width
-        height={tapeHeight}
-        bg="white" // Light grey for the tape
-        opacity={0.8}
-      /> */}
-
       {/* Children */}
       <Box position="relative" p="10px" width="100%" height="100%">
         {children}

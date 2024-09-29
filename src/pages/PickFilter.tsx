@@ -89,7 +89,7 @@ const PickFilter: React.FC = () => {
               >
                 <Text
                   color={"primary.500"}
-                  fontSize={"20px"}
+                  fontSize={"16px"}
                   textAlign={"center"}
                   fontWeight={"bold"}
                 >
@@ -163,10 +163,8 @@ const PickFilter: React.FC = () => {
             <StickyNote
               key={index}
               py={2}
-              width="20vw"
-              height="20vw"
-              tapeWidth="50%"
-              tapeHeight="25%"
+              width="25vw"
+              height="25vw"
               onClick={() =>
                 navigate(`/stories`, { state: { state: state.id } })
               }
@@ -174,7 +172,7 @@ const PickFilter: React.FC = () => {
             >
               <AbsoluteCenter>
                 <Text
-                  fontSize={"18px"}
+                  fontSize={"13px"}
                   color={"primary.500"}
                   fontWeight={"bold"}
                 >

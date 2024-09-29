@@ -72,7 +72,7 @@ const StoriesList: React.FC = () => {
             {Array.from({
               length:
                 stories.length === 0 || stories.length <= 5
-                  ? 30
+                  ? 80
                   : stories.length * 10,
             }).map((_, index) => (
               <>
@@ -138,7 +138,8 @@ const StoriesList: React.FC = () => {
                     <StickyNote
                       width="100%"
                       height="fit-content"
-                      py={20}
+                      pt={"50%"}
+                      pb={"22%"}
                       key={index}
                       _hover={{
                         transform: "scale(1.2) rotate(5deg)",

@@ -220,7 +220,8 @@ export default function AdminHome() {
                     onClick={() => navigate(`/stories/${story.id}`)}
                     width="100%"
                     height="fit-content"
-                    py={20}
+                    pt={"32%"}
+                    pb={"22%"}
                     key={index}
                   >
                     <Center>

@@ -116,12 +116,16 @@ const StoryFilters: React.FC<StoryFiltersProps> = ({
             opacity: 0.4,
           }}
         >
-          <option style={{ color: "black" }} value={"clicks"}>
-            المشاهدات[الأقدم]
-          </option>
-          <option style={{ color: "black" }} value={"-clicks"}>
-            المشاهدات[الأحدث]
-          </option>
+          {localStorage.getItem("token") && (
+            <>
+              <option style={{ color: "black" }} value={"clicks"}>
+                المشاهدات[تصاعدي]
+              </option>
+              <option style={{ color: "black" }} value={"-clicks"}>
+                المشاهدات[تنازلي]
+              </option>
+            </>
+          )}
           <option style={{ color: "black" }} value={"createdAt"}>
             التاريخ[الأقدم]
           </option>
