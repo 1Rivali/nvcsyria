@@ -50,6 +50,15 @@ export default function UpdateUserModal({
         onSuccess(); // Call the success handler to log out or perform another action
         onClose(); // Close the modal
       }
+      if (response.status === 400) {
+        toast({
+          title: "خطأ",
+          description: "فشل تحديث المستخدم، يوجد مستخدم بنفس الاسم",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } catch {
       toast({
         title: "خطأ",
@@ -58,6 +67,9 @@ export default function UpdateUserModal({
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setUsername("");
+      setPassword("");
     }
   };
 
@@ -65,7 +77,7 @@ export default function UpdateUserModal({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>تحديث بيانات المستخدم</ModalHeader>
+        <ModalHeader mr={8}>تحديث بيانات المستخدم</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl>

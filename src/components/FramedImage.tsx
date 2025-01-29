@@ -1,6 +1,5 @@
 import { Box, BoxProps, Image } from "@chakra-ui/react";
 import React from "react";
-import imageFrame from "../assets/square-image-frame.png";
 
 interface FramedImageProps extends BoxProps {
   imageSrc: string;

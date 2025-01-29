@@ -208,8 +208,6 @@ const PickFilter: React.FC = () => {
               py={2}
               width="30vw"
               height="30vw"
-              tapeWidth="50%"
-              tapeHeight="25%"
               onClick={() => navigate(`/stories`, { state: { tag: tag.id } })}
               transform={index % 2 === 0 ? "rotate(5deg)" : "rotate(-5deg)"}
             >

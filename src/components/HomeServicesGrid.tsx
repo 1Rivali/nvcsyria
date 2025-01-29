@@ -32,13 +32,14 @@ const services: Services = {
   ],
 
   mobileTransformValues: [
-    [0, 70],
-    [0, 30],
-    [0, 80],
+    [-60, 300 + 20],
+    [0, 300 + 100],
+    [60, 300 + 20],
   ],
+  mobileRotationValues: [20, 0, -20],
   data: [
     {
-      text: "نشر الوعي حول السلام و العمل الإنساني",
+      text: "نشر الوعي حول السلام والعمل الإنساني",
       images: [
         { src: serv1, alt: "Service 1", width: "18vw", height: "18vw" },
         { src: serv2, alt: "Service 2", width: "20vw", height: "20vw" },
@@ -46,7 +47,7 @@ const services: Services = {
       ],
     },
     {
-      text: "تكوين و تطوير معارف و اتجاهات و مهارات الأفراد و المؤسسات بمجالات عدة من خلال نهج لا عنفي",
+      text: "تكوين وتطوير معارف واتجاهات ومهارات الأفراد والمؤسسات بمجالات عدة من خلال نهج لا عنفي",
       images: [
         { src: serv4, alt: "Service 1", width: "18vw", height: "18vw" },
         { src: serv5, alt: "Service 2", width: "20vw", height: "20vw" },
@@ -57,9 +58,9 @@ const services: Services = {
       text: (
         <Box>
           <Text mb={5}>
-            {<br />} هدفه تشكيل فريق من صناع التغيير و السلام, ليساهموا في رفع
+            {<br />} هدفه تشكيل فريق من صناع التغيير والسلام، ليساهموا في رفع
             الوعي إلى الإيجابيات في مجتمعنا السوري. {<br />} والمساعدة في تدوين
-            و نقل قصص التعاطف والسلام و العيش المشترك.
+            ونقل قصص التعاطف والسلام والعيش المشترك.
           </Text>
           <Link to={"/salam"}>
             <Text decoration={"underline"} color={"secondary.500"}>
@@ -75,7 +76,7 @@ const services: Services = {
       ],
     },
     {
-      text: "تقديم استشارات فردية و جماعية, نفسية-اجتماعية من قبل مختصين لمساعدة الأفراد للوصول إلى مستوى من الرضى و الصحة النفسية",
+      text: "تقديم استشارات فردية وجماعية، نفسية-اجتماعية من قبل مختصين لمساعدة الأفراد للوصول إلى مستوى من الرضى والصحة النفسية",
       images: [
         { src: serv10, alt: "Service 1", width: "18vw", height: "18vw" },
         { src: serv11, alt: "Service 2", width: "20vw", height: "20vw" },
@@ -83,7 +84,7 @@ const services: Services = {
       ],
     },
     {
-      text: "العمل على تشكيل و تمكين حاضنات سلام لتوفير بيئة امنة بما يساهم في خفض العنف.",
+      text: "العمل على تشكيل وتمكين حاضنات سلام لتوفير بيئة امنة بما يساهم في خفض العنف.",
       images: [
         { src: serv13, alt: "Service 1", width: "18vw", height: "18vw" },
         { src: serv14, alt: "Service 2", width: "20vw", height: "20vw" },
@@ -101,12 +102,14 @@ const HomeServiceGrid = () => {
       backgroundRepeat={"repeat-y"}
       backgroundSize={"fill"}
       backgroundPosition={"center"}
+      pb={"20%"}
     >
       {services.data.map((service, index) => (
         <HomeServiceSection
           key={index}
           service={service}
           transformValues={services.transformValues}
+          mobileRotateValues={services.mobileRotationValues}
           mobileTransformValues={services.mobileTransformValues}
           index={index}
         />

@@ -2,6 +2,8 @@ import { CloseIcon } from "@chakra-ui/icons";
 import {
   Badge,
   Button,
+  Checkbox,
+  CircularProgress,
   FormControl,
   FormLabel,
   HStack,
@@ -37,12 +39,16 @@ interface FormData {
   keywords: string;
   tags: number[];
   state: string;
+  written_at?: string;
+  visible: boolean;
 }
 
 export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
   const { tags } = useTags();
   const { states } = useStates();
   const toast = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
+  console.log(tags, states);
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -51,6 +57,8 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
     keywords: "",
     tags: [],
     state: "",
+    visible: false,
+    written_at: undefined,
   });
 
   const handleChange = (
@@ -58,7 +66,15 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+
+    // Handle checkbox separately
+    if (type === "checkbox") {
+      const isChecked = (e.target as HTMLInputElement).checked;
+      setFormData({ ...formData, [name]: isChecked });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -83,12 +99,14 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
       title: formData.title,
       body: formData.body,
       teller: formData.teller,
-      keywords: formData.keywords,
+      keywords: formData.keywords ?? "",
       tags: formData.tags,
+      written_at: formData.written_at ?? "",
+      visible: formData.visible,
     };
-
+    setLoading(true);
     try {
-      await axios.post(`${baseUrl}/${apiVersion}/stories/`, requestData, {
+      await axios.post(`${baseUrl}/${apiVersion}/stories`, requestData, {
         headers: { Authorization: localStorage.getItem("token") },
       });
       toast({
@@ -97,6 +115,7 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
         status: "success",
         duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
       onClose();
       window.location.reload();
@@ -109,6 +128,8 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
         isClosable: true,
       });
       console.error("Error creating story:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,12 +137,12 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent bg="primary.100">
-        <ModalHeader color="primary.800" fontFamily="heading">
+        <ModalHeader color="primary.800" fontFamily="heading" mr={8}>
           إضافة قصة جديدة
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl id="title" mb={4}>
+          <FormControl id="title" mb={4} isRequired={true}>
             <FormLabel color="primary.900" fontFamily="body">
               عنوان القصة
             </FormLabel>
@@ -182,6 +203,7 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
           <FormControl id="state">
             <FormLabel>المحافظة</FormLabel>
             <Select
+              textAlign={"center"}
               backgroundColor={"primary.500"}
               name="state"
               value={formData.state}
@@ -207,6 +229,7 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
           <FormControl id="tags" mb={4}>
             <FormLabel>النوع</FormLabel>
             <Select
+              textAlign={"center"}
               backgroundColor={"primary.500"}
               name="tags"
               onChange={handleTagChange}
@@ -250,6 +273,35 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
               );
             })}
           </HStack>
+          <FormControl id="written_at" mb={4}>
+            <FormLabel color="primary.900" fontFamily="body">
+              التاريخ
+            </FormLabel>
+            <Input
+              type="written_at"
+              backgroundColor={"primary.500"}
+              name="written_at"
+              value={formData.written_at}
+              onChange={handleChange}
+              color="white"
+            />
+          </FormControl>
+
+          <FormControl id="visible" mb={4}>
+            <FormLabel color="primary.900" fontFamily="body">
+              مرأي/غير مرأي
+            </FormLabel>
+            <Checkbox
+              name="visible"
+              isChecked={formData.visible}
+              onChange={(e) =>
+                setFormData({ ...formData, visible: e.target.checked })
+              }
+              colorScheme="primary"
+            >
+              مرأي
+            </Checkbox>
+          </FormControl>
         </ModalBody>
 
         <ModalFooter>
@@ -260,7 +312,7 @@ export default function AddStoryModal({ isOpen, onClose }: AddStoryModalProps) {
             mr={3}
             onClick={handleSubmit}
           >
-            إضافة
+            {loading ? <CircularProgress /> : "إضافة"}
           </Button>
           <Button variant="ghost" onClick={onClose} color="primary.500">
             إلغاء

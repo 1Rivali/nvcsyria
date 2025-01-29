@@ -10,8 +10,10 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
+
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -26,6 +28,7 @@ import useStates from "../hooks/useStates";
 import useStories from "../hooks/useStories";
 import useTags from "../hooks/useTags";
 import { IStoryFilters } from "../types/storyTypes";
+import { FaEye } from "react-icons/fa";
 
 export interface StoryFormData {
   title: string;
@@ -34,6 +37,7 @@ export interface StoryFormData {
   keywords: string;
   tags: number[];
   state_id: string;
+  written_at?: string;
 }
 
 export default function AdminHome() {
@@ -52,6 +56,7 @@ export default function AdminHome() {
     teller: "",
     keywords: "",
     tags: [],
+    written_at: undefined,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [editingStory, setEditingStory] = useState(null);
@@ -70,10 +75,12 @@ export default function AdminHome() {
       const updatedFilters: IStoryFilters = { ...prev };
       console.log("value", value);
       if (value === "") {
+        // @ts-expect-error 123
         delete updatedFilters[name];
 
         return updatedFilters;
       }
+      // @ts-expect-error 123
       updatedFilters[name] = value;
       return updatedFilters;
     });
@@ -81,8 +88,45 @@ export default function AdminHome() {
   const clearFilters = () => {
     setFilters({});
   };
+  const [visiblityLoading, setVisibiltyLoading] = useState(false);
+  const toast = useToast();
+  const handleVisibility = async (id: number, val: boolean) => {
+    setVisibiltyLoading(true);
+    try {
+      await axios.put(
+        `${baseUrl}/${apiVersion}/stories/${id}`,
+        {
+          visible: val,
+        },
+        { headers: { Authorization: localStorage.getItem("token") } }
+      );
 
-  const handleEditClick = (story: any) => {
+      toast({
+        title: "نجاح",
+        description: "تمت العملية بنجاح",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } catch {
+      toast({
+        title: "خطأ",
+        description: "لقد حدثت مشكلة ما يرجى إعادة المحاولة",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    } finally {
+      setVisibiltyLoading(false);
+      setRefetch((prev) => (prev += 1));
+    }
+  };
+
+  // @ts-expect-error 123
+  const handleEditClick = (story) => {
     console.log(story);
     setEditingStory(story);
     setFormData({
@@ -91,11 +135,12 @@ export default function AdminHome() {
       body: story.attributes.body || "",
       teller: story.attributes.teller || "",
       keywords: story.attributes.keywords || "",
+      // @ts-expect-error 123
       tags: story.includes.category.map((e) => Number(e.id)) || "",
     });
     onOpen();
   };
-
+  // @ts-expect-error 123
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -104,6 +149,7 @@ export default function AdminHome() {
   const handleEditSubmit = async () => {
     try {
       await axios.put(
+        // @ts-expect-error 123
         `${baseUrl}/${apiVersion}/stories/${editingStory.id}`,
         {
           ...formData,
@@ -148,7 +194,7 @@ export default function AdminHome() {
           {Array.from({
             length:
               stories.length === 0 || stories.length <= 5
-                ? 30
+                ? 45
                 : stories.length * 5,
           }).map((_, index) => (
             <>
@@ -210,14 +256,22 @@ export default function AdminHome() {
             >
               {loading && <Spinner size={"xl"} />}
               {stories.map((story, index) => (
-                <Box position="relative" key={index} m={2}>
+                <Box
+                  position="relative"
+                  key={index}
+                  m={2}
+                  _hover={
+                    story.attributes.body && {
+                      transform: "scale(1.2) rotate(2deg)",
+                      cursor: "pointer",
+                    }
+                  }
+                >
                   {/* Sticky Note */}
                   <StickyNote
-                    _hover={{
-                      transform: "scale(1.2) rotate(5deg)",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate(`/stories/${story.id}`)}
+                    onClick={() =>
+                      story.attributes.body && navigate(`/stories/${story.id}`)
+                    }
                     width="100%"
                     height="fit-content"
                     pt={"32%"}
@@ -240,20 +294,32 @@ export default function AdminHome() {
                         >
                           {story.attributes.title}
                         </Heading>
-                        <Text
-                          color={"black"}
-                          fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                          noOfLines={1} // Truncate after 1 line
-                        >
-                          {story.includes.place.attributes.name}
-                        </Text>
-                        <Text
-                          color={"black"}
-                          fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-                          noOfLines={1} // Truncate after 1 line
-                        >
-                          {story.includes.category[0].attributes.name}
-                        </Text>
+                        {story.includes.place && (
+                          <Text
+                            color={"black"}
+                            fontSize={{
+                              base: "14px",
+                              md: "16px",
+                              lg: "18px",
+                            }}
+                            noOfLines={1} // Truncate after 1 line
+                          >
+                            {story.includes.place.attributes.name}
+                          </Text>
+                        )}
+                        {story.includes.category[0] && (
+                          <Text
+                            color={"black"}
+                            fontSize={{
+                              base: "14px",
+                              md: "16px",
+                              lg: "18px",
+                            }}
+                            noOfLines={1} // Truncate after 1 line
+                          >
+                            {story.includes.category[0].attributes.name}
+                          </Text>
+                        )}
                         <Text
                           color={"secondary.800"}
                           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
@@ -264,28 +330,33 @@ export default function AdminHome() {
                         <HStack fontWeight={"bold"}>
                           <BsEye size={"24px"} />
                           <Text
-                            fontSize={{ base: "14px", md: "16px", lg: "18px" }}
+                            fontSize={{
+                              base: "14px",
+                              md: "16px",
+                              lg: "18px",
+                            }}
                             textAlign={"center"}
                             noOfLines={1} // Truncate after 1 line
                           >
                             {story.attributes.clicks}
                           </Text>
                         </HStack>
-                        <HStack fontWeight={"bold"}>
-                          <MdDateRange size={"24px"} />
-                          <Text>
-                            قبل
-                            {formatDateToAgo(story.attributes.created_at)}
-                          </Text>
-                        </HStack>
+                        {story.attributes.created_at && (
+                          <HStack fontWeight={"bold"}>
+                            <MdDateRange size={"24px"} />
+                            <Text>
+                              قبل
+                              {formatDateToAgo(story.attributes.created_at)}
+                            </Text>
+                          </HStack>
+                        )}
                       </VStack>
                     </Center>
                   </StickyNote>
-
                   {/* Edit Button (Left) */}
                   <Button
                     position="absolute"
-                    left="6"
+                    left="0"
                     top="0"
                     transform="translateY(200%)"
                     size="sm"
@@ -295,7 +366,30 @@ export default function AdminHome() {
                   >
                     ✎
                   </Button>
-
+                  {/*Visible Button*/}
+                  <Button
+                    position="absolute"
+                    right="40%"
+                    top="0"
+                    transform="translateY(200%)"
+                    size="sm"
+                    borderRadius="full"
+                    backgroundColor={
+                      story.attributes.visible ? "green" : "gray.600"
+                    }
+                    color={"white"}
+                    onClick={
+                      visiblityLoading
+                        ? undefined
+                        : () =>
+                            handleVisibility(
+                              story.id,
+                              !story.attributes.visible
+                            )
+                    }
+                  >
+                    {<FaEye />}
+                  </Button>
                   {/* Delete Button (Right) */}
                   <Button
                     position="absolute"

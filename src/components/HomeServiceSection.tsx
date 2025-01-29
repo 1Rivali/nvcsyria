@@ -4,9 +4,9 @@ import {
   Text,
   AbsoluteCenter,
   useBreakpointValue,
-  Center,
   HStack,
   VStack,
+  Container,
 } from "@chakra-ui/react";
 import StickyNote from "../components/StickyNote";
 import { FramedImage } from "../components/FramedImage";
@@ -17,13 +17,14 @@ interface HomeServiceSectionProps {
   index: number;
   transformValues: number[][];
   mobileTransformValues: number[][];
+  mobileRotateValues: number[];
 }
 
 const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
   service,
   index,
-
   mobileTransformValues,
+  mobileRotateValues,
 }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   if (!isMobile) {
@@ -98,43 +99,35 @@ const HomeServiceSection: React.FC<HomeServiceSectionProps> = ({
     );
   }
   return (
-    <Box position="relative" height={"70vh"} width={"full"}>
-      <Center>
-        <HStack>
-          {service.images.map((image, idx) => (
-            <FramedImage
-              key={idx}
-              imageSrc={image.src}
-              imageAlt={image.alt}
-              width={"120px"}
-              height={"120px"}
-              zIndex={idx + 2}
-              transform={`translate(${mobileTransformValues[idx][0]}%, ${mobileTransformValues[idx][1]}%)`}
-            />
-          ))}
-        </HStack>
-        <StickyNote
-          position={"absolute"}
-          height={"60%"}
-          width={"100%"}
-          bottom={0}
-          mb={5}
-        >
-          <AbsoluteCenter>
-            <Box textAlign={"center"}>
-              <Heading
-                mt={20}
-                fontSize={index !== 2 ? "16px" : "20px"}
-                as={"h1"}
-                mb={"2%"}
-              >
-                {index !== 2 ? "خدماتنا" : 'مشروع "حكايا سلام"'}
-              </Heading>
-              <Text fontSize={"14px"}>{service.text}</Text>
-            </Box>
-          </AbsoluteCenter>
-        </StickyNote>
-      </Center>
+    <Box position="relative" height={"78vh"} width={"full"}>
+      <StickyNote position={"absolute"} height={"75%"} width={"100%"} mb={5}>
+        <AbsoluteCenter>
+          <Container textAlign={"center"}>
+            <Heading
+              mt={20}
+              fontSize={index !== 2 ? "16px" : "20px"}
+              as={"h1"}
+              mb={"2%"}
+            >
+              {index !== 2 ? "خدماتنا" : 'مشروع "حكايا سلام"'}
+            </Heading>
+            <Text fontSize={"14px"}>{service.text}</Text>
+          </Container>
+        </AbsoluteCenter>
+      </StickyNote>
+      <HStack>
+        {service.images.map((image, idx) => (
+          <FramedImage
+            key={idx}
+            imageSrc={image.src}
+            imageAlt={image.alt}
+            width={"140px"}
+            height={"140px"}
+            zIndex={idx === 1 ? idx : idx + 2}
+            transform={`translate(${mobileTransformValues[idx][0]}%, ${mobileTransformValues[idx][1]}%) rotate(${mobileRotateValues[idx]}deg)`}
+          />
+        ))}
+      </HStack>
     </Box>
   );
 };

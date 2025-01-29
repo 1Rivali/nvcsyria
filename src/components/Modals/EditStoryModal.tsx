@@ -66,7 +66,7 @@ const EditStoryModal: React.FC<EditStoryModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent bg="primary.100">
-        <ModalHeader color="primary.800" fontFamily="heading">
+        <ModalHeader color="primary.800" fontFamily="heading" mr={8}>
           تعديل القصة
         </ModalHeader>
         <ModalCloseButton />
@@ -94,6 +94,7 @@ const EditStoryModal: React.FC<EditStoryModalProps> = ({
               name="state_id"
               value={formData.state_id}
               onChange={handleFormChange}
+              textAlign={"center"}
               placeholder="اختر المحافظة"
               _placeholder={{
                 color: "white",
@@ -119,6 +120,7 @@ const EditStoryModal: React.FC<EditStoryModalProps> = ({
               backgroundColor={"primary.500"}
               name="tags"
               onChange={handleTagChange}
+              textAlign={"center"}
               placeholder="اختر النوع"
               _placeholder={{
                 color: "white",
@@ -201,6 +203,20 @@ const EditStoryModal: React.FC<EditStoryModalProps> = ({
               backgroundColor={"primary.500"}
               _hover={{ bg: "secondary.200" }}
               _focus={{ bg: "primary.500", borderColor: "secondary.500" }}
+            />
+          </FormControl>
+
+          <FormControl id="written_at" mb={4}>
+            <FormLabel color="primary.900" fontFamily="body">
+              التاريخ
+            </FormLabel>
+            <Input
+              type="written_at"
+              backgroundColor={"primary.500"}
+              name="written_at"
+              value={formData.written_at}
+              onChange={handleFormChange}
+              color="white"
             />
           </FormControl>
         </ModalBody>

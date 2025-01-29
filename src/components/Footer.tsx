@@ -118,7 +118,7 @@ export default function Footer() {
             </Text>
           </Link>
 
-          <Link to="https://www.instagram.com">
+          <Link to="https://www.instagram.com/nvcsyria/" target="_blank">
             <Icon
               color="white"
               _hover={{ color: "secondary.500" }}
@@ -127,7 +127,7 @@ export default function Footer() {
               boxSize={{ base: 5, md: 6 }}
             />
           </Link>
-          <Link to="https://www.facebook.com">
+          <Link to="https://www.facebook.com/NVCSyria" target="_blank">
             <Icon
               color="white"
               _hover={{ color: "secondary.500" }}

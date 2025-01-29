@@ -42,10 +42,12 @@ const StoriesList: React.FC = () => {
       const updatedFilters: IStoryFilters = { ...prev };
       console.log("value", value);
       if (value === "") {
+        // @ts-expect-error 123
         delete updatedFilters[name];
 
         return updatedFilters;
       }
+      // @ts-expect-error 123
       updatedFilters[name] = value;
       return updatedFilters;
     });

@@ -23,7 +23,7 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
-
+  // @ts-expect-error 123
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,7 +40,7 @@ const AdminLogin = () => {
         isClosable: true,
       });
       navigate("/admin/home");
-    } catch (error) {
+    } catch {
       toast({
         title: "خطأ",
         description: "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",

@@ -20,6 +20,7 @@ import { BiLogOut, BiUser } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import AddStoryModal from "./Modals/AddStoryModal";
 import UpdateUserModal from "./Modals/UpdateUserModal"; // Import the new modal
+import { baseUrl } from "../config/constants";
 
 export default function AdminNavbar() {
   const isMobile = useBreakpointValue({ base: true, md: false });
