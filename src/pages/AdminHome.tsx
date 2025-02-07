@@ -176,10 +176,12 @@ export default function AdminHome() {
     }
   };
 
-  function formatDateToAgo(date: Date | string): string {
-    const parsedDate = new Date(date); // Ensure the date is a Date object
-    return formatDistanceToNow(parsedDate, { addSuffix: false });
-  }
+  // NOTE: WAS USED FOR AGO
+  // function formatDateToAgo(date: Date | string): string {
+  //   console.log(date);
+  //   const parsedDate = new Date(date); // Ensure the date is a Date object
+  //   return formatDistanceToNow(parsedDate, { addSuffix: false });
+  // }
 
   return (
     <Box bgColor={"primary.500"}>
@@ -344,10 +346,7 @@ export default function AdminHome() {
                         {story.attributes.created_at && (
                           <HStack fontWeight={"bold"}>
                             <MdDateRange size={"24px"} />
-                            <Text>
-                              قبل
-                              {formatDateToAgo(story.attributes.created_at)}
-                            </Text>
+                            <Text>{story.attributes.created_at}</Text>
                           </HStack>
                         )}
                       </VStack>

@@ -187,9 +187,7 @@ const StoriesList: React.FC = () => {
                           </Text>
                           <HStack fontWeight={"bold"}>
                             <MdDateRange size={"24px"} />
-                            <Text>
-                              قبل {formatDateToAgo(story.attributes.created_at)}
-                            </Text>
+                            <Text>{story.attributes.created_at}</Text>
                           </HStack>
                         </VStack>
                       </Center>
