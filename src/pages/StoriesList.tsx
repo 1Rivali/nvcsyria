@@ -19,7 +19,7 @@ import useStories from "../hooks/useStories";
 import useTags from "../hooks/useTags";
 import { IStoryFilters } from "../types/storyTypes";
 import { MdDateRange } from "react-icons/md";
-import { formatDistanceToNow } from "date-fns";
+// import { formatDistanceToNow } from "date-fns";
 
 const StoriesList: React.FC = () => {
   const location = useLocation();
@@ -55,10 +55,10 @@ const StoriesList: React.FC = () => {
   const clearFilters = () => {
     setFilters(location.state);
   };
-  function formatDateToAgo(date: Date | string): string {
-    const parsedDate = new Date(date); // Ensure the date is a Date object
-    return formatDistanceToNow(parsedDate, { addSuffix: false });
-  }
+  // function formatDateToAgo(date: Date | string): string {
+  //   const parsedDate = new Date(date); // Ensure the date is a Date object
+  //   return formatDistanceToNow(parsedDate, { addSuffix: false });
+  // }
 
   return (
     <>

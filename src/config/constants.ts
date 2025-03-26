@@ -1,2 +1,2 @@
-export const baseUrl = "http://localhost:8000/api";
+export const baseUrl = "https://api.taatof.org/api";
 export const apiVersion = "v1";

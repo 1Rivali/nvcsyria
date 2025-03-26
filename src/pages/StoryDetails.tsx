@@ -15,13 +15,24 @@ export default function StoryDetails() {
   const { story } = useStory(storyId!);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  function splitStringEvery(str: string, count: number) {
-    const result = [];
-    for (let i = 0; i < str.length; i += count) {
-      result.push(str.slice(i, i + count));
+  function splitStringAtWords(str: string, maxLength: number) {
+    const words = str.split(" ");
+    const lines = [];
+    let currentLine = "";
+
+    for (const word of words) {
+      if ((currentLine + word).length > maxLength) {
+        lines.push(currentLine.trim());
+        currentLine = word + " ";
+      } else {
+        currentLine += word + " ";
+      }
     }
-    return result;
+    if (currentLine.trim()) lines.push(currentLine.trim());
+
+    return lines;
   }
+
   return (
     <Box
       width={"full"}
@@ -62,7 +73,7 @@ export default function StoryDetails() {
                   borderWidth={"2px"}
                 />
 
-                {splitStringEvery(
+                {splitStringAtWords(
                   story.attributes.body,
                   !isMobile ? 90 : 30
                 ).map((line: string, index: number) => (
